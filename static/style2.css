@@ -1,0 +1,38 @@
+
+        /* Modificando a cor do fundo da página */
+        body {
+            background-color: #0a9ae2;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Modificando a cor de uma parte específica */
+        header {
+            background-color: #034303;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Arial', sans-serif;
+        }
+
+        img {
+            width: 300px;
+            height: auto;
+        }
+
+        /* Estilo para imagem flutuante */
+        .img-float {
+            float: right;
+            margin: 10px;
+        }
+
+        table, th, td {
+            border: 1px solid rgb(0, 0, 0);
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+        }
