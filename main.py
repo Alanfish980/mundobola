@@ -4,13 +4,23 @@ import dao
 from flask import *
 app = Flask(__name__)
 
+app.secret_key = 'Khggj3h424j23hg44$#'
+
+@app.route('/logout', methods=['POST', 'GET'])
+def sair():
+    session.pop('login')
+    return render_template('principal.html')
+
 @app.route('/login' , methods=['POST'])
 def fazer_login():
     login = request.form.get('username')
     senha = request.form.get('password')
+    saida = dao.login(login, senha)
 
-    if len(dao.login(login, senha)) > 0:
-        return render_template('homepage.html')
+    if len(saida) > 0:
+        session['login'] = login
+        nome_user = saida[0][0]
+        return render_template('homepage.html', nome=nome_user)
     else:
          return render_template('principal.html')
 
@@ -30,6 +40,7 @@ def verificar_login():
     senha = request.form.get('password')
 
     if len(dao.login(login, senha)) > 0:
+        session['login'] = login
         return render_template('homepage.html')
     else:
         return render_template('principal.html', msg='Usuário ou senha inválidos')
@@ -51,10 +62,12 @@ def cadastrar_usuario():
 
 @app.route('/listausuarios')
 def listar_usuarios():
+    if 'login' in session:
 
-    usuarios = dao.listar_usuarios()
-    print(usuarios)
-    return render_template('listausuarios.html', lista=usuarios)
+      usuarios = dao.listar_usuarios()
+      return render_template('listausuarios.html', lista=usuarios)
+    else:
+      return render_template('principal.html')
 
 
 if __name__ == '__main__':
