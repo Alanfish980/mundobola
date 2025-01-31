@@ -60,3 +60,20 @@ def listar_usuarios():
     con.close()
 
     return saida
+def mostrar_campeao(campeao, login):
+    conn = conectardb()
+    cur = conn.cursor()
+    try:
+        sql = f"INSERT INTO campeao (campeao, login) VALUES ('{campeao}' , '{login}')"
+        cur.execute(sql)
+
+    except psycopg2.IntegrityError:
+        conn.rollback()
+        exito = False
+    else:
+        conn.commit()
+        exito = True
+
+    cur.close()
+    conn.close()
+    return exito

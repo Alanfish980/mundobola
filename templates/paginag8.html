@@ -3,43 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Nomes</title>
+    <title>Exemplo de Select</title>
     <link rel="stylesheet" href="..//static//style5.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Adicionar Nomes à Lista</h1>
-        <form id="nameForm">
-            <div class="form-group">
-                <label for="nome">Nome</label>
-                <input type="text" id="nome" name="nome" required>
+    <form  action="/Times" method="post">
+
+        <label for="Times">Escolha o campeão: </label>
+        <select id="Times" name="campeao">
+            <option value="Flamengo">Flamengo</option>
+            <option value="Corinthians">Corinthians</option>
+            <option value="Palmeiras">Palmeiras</option>
+            <option value="Cruzeiro">Cruzeiro</option>
+        </select>
+           <div class="form-group">
+                <button type="submit">Salvar</button>
+
+                    <p> <a href="/verificarlogin"> Voltar para pagina principal.</a>
+                    </p>
             </div>
-            <div class="form-group">
-                <button type="submit">Adicionar</button>
-            </div>
-        </form>
-        <ul id="nameList" class="name-list">
-            <!-- Nomes adicionados aparecerão aqui -->
-        </ul>
-    </div>
 
-    <script>
-        const form = document.getElementById('nameForm');
-        const nameList = document.getElementById('nameList');
+    </form>
 
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
-            const nameInput = document.getElementById('nome');
-            const name = nameInput.value.trim();
-
-            if (name) {
-                const listItem = document.createElement('li');
-                listItem.textContent = name;
-                nameList.appendChild(listItem);
-                nameInput.value = '';
-                nameInput.focus();
-            }
-        });
-    </script>
 </body>
 </html>
+
+

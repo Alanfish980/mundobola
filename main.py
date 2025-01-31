@@ -34,21 +34,40 @@ def home():
 def pagina_tabela():
     return render_template('paginag8.html')
 
-@app.route('/verificarlogin', methods=['POST'])
+@app.route('/verificarlogin', methods=['POST','GET'])
 def verificar_login():
-    login = request.form.get('username')
-    senha = request.form.get('password')
 
-    if len(dao.login(login, senha)) > 0:
-        session['login'] = login
+    if request.method == 'GET' and 'login' in session:
+        return render_template('homepage.html')
+    elif request.method == 'GET' and not 'login' in session:
+        return render_template('principal.html', msg='Usuário ou senha inválidos')
+    elif request.method == 'POST'  and 'login' in session:
         return render_template('homepage.html')
     else:
-        return render_template('principal.html', msg='Usuário ou senha inválidos')
+        login = request.form.get('username')
+        senha = request.form.get('password')
+
+        if len(dao.login(login, senha)) > 0:
+            session['login'] = login
+            return render_template('homepage.html')
+        else:
+            return render_template('principal.html', msg='Usuário ou senha inválidos')
 
 
 @app.route('/pagina_cadastro')
 def mostrar_pagina_cadastro():
     return render_template('cadastrarusuario.html')
+
+
+@app.route('/Times', methods=['POST'])
+def mostrar_campeao():
+    campeao = request.form.get('campeao')
+    login = session['login']
+    if dao.mostrar_campeao(campeao, login):
+        msg = 'Bom Palpite'
+        return render_template('paginag8.html', texto=msg)
+
+
 
 @app.route('/cadastrarusuario', methods=['POST'])
 def cadastrar_usuario():
