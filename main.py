@@ -11,21 +11,6 @@ def sair():
     session.pop('login')
     return render_template('principal.html')
 
-@app.route('/login' , methods=['POST'])
-def fazer_login():
-    login = request.form.get('username')
-    senha = request.form.get('password')
-    saida = dao.login(login, senha)
-
-    if len(saida) > 0:
-        session['login'] = login
-        nome_user = saida[0][0]
-        return render_template('homepage.html', nome=nome_user)
-    else:
-         return render_template('principal.html')
-
-
-
 @app.route('/')
 def home():
     return render_template('principal.html')
@@ -62,10 +47,11 @@ def mostrar_pagina_cadastro():
 @app.route('/Times', methods=['POST'])
 def mostrar_campeao():
     campeao = request.form.get('campeao')
-    login = session['login']
-    if dao.mostrar_campeao(campeao, login):
+    if dao.mostrar_campeao(campeao, session['login']):
         msg = 'Bom Palpite'
         return render_template('paginag8.html', texto=msg)
+    else:
+        return redirect(url_for('verificar_login'))
 
 
 
@@ -88,6 +74,14 @@ def listar_usuarios():
     else:
       return render_template('principal.html')
 
+@app.route('/listarvotos')
+def listar_votos():
+    if 'login' in session:
+
+      campeao = dao.listar_votos()
+      return render_template('votos.html', lista=campeao)
+    else:
+      return render_template('principal.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

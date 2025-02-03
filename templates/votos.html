@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Valores</title>
+  <link rel="stylesheet" href="../static/valores.css">
+</head>
+<body>
+  <ul class="user-list">
+                {% for campeao in lista %}
+                <li class="user-item">
+                    <span class="user-login">{{campeao[0]}}</span>
+                    <span class="user-name">{{campeao[1]}}</span>
+                </li>
+                {% endfor %}
+            </ul>
+    </ol>
+  </div>
+</body>
+</html>

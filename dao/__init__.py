@@ -60,14 +60,29 @@ def listar_usuarios():
     con.close()
 
     return saida
+
+
+def listar_votos():
+    con = conectardb()
+    cur = con.cursor()
+    sq = f"SELECT  login, nome from campeao"
+    cur.execute(sq)
+    saida = cur.fetchall()
+
+    cur.close()
+    con.close()
+
+    return saida
+
 def mostrar_campeao(campeao, login):
     conn = conectardb()
     cur = conn.cursor()
     try:
-        sql = f"INSERT INTO campeao (campeao, login) VALUES ('{campeao}' , '{login}')"
+        sql = f"INSERT INTO campeao (login, nome) VALUES ('{login}','{campeao}')"
         cur.execute(sql)
 
-    except psycopg2.IntegrityError:
+    except psycopg2.IntegrityError as e:
+        print(e)
         conn.rollback()
         exito = False
     else:
@@ -76,4 +91,6 @@ def mostrar_campeao(campeao, login):
 
     cur.close()
     conn.close()
+
+
     return exito
